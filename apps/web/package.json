@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@repo/ui": "*",
     "@repo/db": "*",
+    "@repo/ui": "*",
+    "@types/ws": "^8.5.12",
     "next": "14.2.6",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "socket.io-client": "^4.7.5",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
