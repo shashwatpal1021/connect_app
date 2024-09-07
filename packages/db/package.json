@@ -2,7 +2,7 @@
   "name": "@repo/db",
   "version": "1.0.0",
   "exports": {
-    ".": "./src/index.js"
+    "./client": "./src/index.js"
   },
   "scripts": {
     "db:generate": "prisma generate",
