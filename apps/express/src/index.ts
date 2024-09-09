@@ -5,22 +5,11 @@ const app = express();
 
 const prisma = new PrismaClient();
 
-app.get('/', async(req, res) => {
-  const resp = await prisma.user.create(
-    {
-      data: {
-        name: "test"
-      }
-    }
-  )
-  console.log({
-    id: resp.id,
-    name: resp.name
-  })
-  res.send("Hello" + {
-    id: resp.id,
-    name: resp.name
-  })
+app.get('/', async (req, res) => {
+  const resp = await prisma.user.findMany()
+
+  console.log("resp", resp)
+  res.send(resp)
 })
 
 app.get('/a', (req, res) => {
