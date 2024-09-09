@@ -1,12 +1,17 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
-
+import { PrismaClient } from '@repo/db/client';
 const app = express();
 
 const prisma = new PrismaClient();
 
 app.get('/', async (req, res) => {
-  const resp = await prisma.user.findMany()
+  const resp = await prisma.user.create({
+    data: {
+      name: "shashwat",
+      email: "shashwat1@gmail.com",
+      password: "shashwat",
+    }
+  })
 
   console.log("resp", resp)
   res.send(resp)
