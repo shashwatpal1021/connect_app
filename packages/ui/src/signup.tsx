@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { z } from "zod";
-import { signUpSchema } from "./Schema/signup";
+import axios from "axios"
+import { signUpSchema } from "./schema/signup";
 
 export const Signup = ({ children }: { children: React.ReactNode }) => {
   // const [email, setEmail] = useState('');
@@ -16,20 +16,19 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
   const setData=(e:any)=>{
     setformData({ ...fomrData, [e.target.name]: e.target.value })
   }
-  const SubmitData=()=>
-  {
-const result= signUpSchema.safeParse(fomrData);
-
-if (result.success) {
-  // Validation passed, handle successful submission here
-  console.log("Form submitted successfully!", result.data);
-} else {
-  // Validation failed, handle errors here
-  console.log("Validation errors:", result.error.format());
-}
+ 
+  const SubmitData = async () => {
+    const result = signUpSchema.safeParse(fomrData);
+    if (result.success) {
+      console.log("Form submitted successfully!", result.data);
+      const res = await axios.post(`http://localhost:4000/create`, result.data)
+      console.log("res", res)
+    } else {
+      console.log("Validation errors:", result.error.format());
+    }
   }
   return (
-  
+
     <div>
       <h1>Hey there! Welcome</h1>
       {children}
