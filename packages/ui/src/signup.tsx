@@ -4,9 +4,9 @@ import { z } from "zod";
 import { signUpSchema } from "./Schema/signup";
 
 export const Signup = ({ children }: { children: React.ReactNode }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
   const [fomrData,setformData]=useState({
     email:'',
     password:'',
