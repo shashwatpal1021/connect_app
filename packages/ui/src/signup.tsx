@@ -7,9 +7,18 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [fomrData,setformData]=useState({
+    email:'',
+    password:'',
+    confirmPassword:'',
+  })
+
+  const setData=(e:any)=>{
+    setformData({ ...fomrData, [e.target.name]: e.target.value })
+  }
   const SubmitData=()=>
   {
-const result= signUpSchema.safeParse({ email, password, confirmPassword });
+const result= signUpSchema.safeParse(fomrData);
 
 if (result.success) {
   // Validation passed, handle successful submission here
@@ -25,9 +34,9 @@ if (result.success) {
       <h1>Hey there! Welcome</h1>
       {children}
       <br />
-      <label htmlFor="email">Email: <input type="text" value={email} name="email" id="email" onChange={(e) => setEmail(e.target.value)} /></label>
-      <label htmlFor="createpassword">Create Password: <input type="text" value={password} name="createpassword" id="createpassword" onChange={(e) => setPassword(e.target.value)} /></label>
-      <label htmlFor="confirmpassword">Confirm Password: <input type="text" value={confirmPassword} name="confirmpassword" id="confirmpassword"   onChange={(e) => setConfirmPassword(e.target.value)} /></label>
+      <label htmlFor="email">Email: <input type="text" value={fomrData.email} name="email" id="email" onChange={setData} /></label>
+      <label htmlFor="createpassword">Create Password: <input type="text" value={fomrData.password} name="createpassword" id="createpassword" onChange={setData} /></label>
+      <label htmlFor="confirmpassword">Confirm Password: <input type="text" value={fomrData.confirmPassword} name="confirmpassword" id="confirmpassword"   onChange={setData} /></label>
       <button type="submit" onClick={SubmitData}>Submit</button>
     </div>
   );
