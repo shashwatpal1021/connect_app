@@ -33,7 +33,7 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
     <div className="flex flex-col justify-center ">
       <div className="flex flex-col p-5 justify-center border-solid border-2  rounded-lg shadow-2xl">
         <div className="text-2xl mb-1 font-bold">{children}</div>
-        <h1>Hey there! Welcome</h1>
+        <h1>Hey there! Welcome branch add</h1>
         <hr />
         <label htmlFor="name" className="p-1">Name: <input type="text"
           className="p-1 w-full border-2 border-black rounded-lg"
