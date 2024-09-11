@@ -11,9 +11,9 @@ interface User{
 
 const page = () => {
   return (
-    <div className='flex h-screen w-full justify-center'>
+    
       <Signup>Sign Up</Signup>
-    </div>
+   
   )
 }
 
