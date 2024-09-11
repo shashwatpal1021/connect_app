@@ -59,11 +59,11 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
         <label htmlFor="confirmpassword" className="p-1">Confirm Password: <input type="text"
           className="p-1 w-full border-2 border-black rounded-lg"
           value={fomrData.confirmPassword}
-          name="confirmpassword"
-          id="confirmpassword"
-          placeholder="confirmpassword"
+          name="confirmPassword"
+          id="confirmPassword"
+          placeholder="confirmPassword"
           onChange={setData} /></label>
-        <label htmlFor="confirmpassword" className="pt-3 pr-1 pl-1"><button type="submit" className="p-1 w-full border-2 border-black rounded-lg" onClick={SubmitData}>Submit</button>
+        <label className="pt-3 pr-1 pl-1"><button type="submit" className="p-1 w-full border-2 border-black rounded-lg" onClick={SubmitData}>Submit</button>
         </label>
       </div>
     </div>
