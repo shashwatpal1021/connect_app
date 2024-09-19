@@ -15,8 +15,12 @@ const Home = () => {
   return (
     <div>
       <div className="m-4 text-2xl">Home</div>
-      <Button onClick={addUser} appName="web" className="m-4">Button</Button>
-     
+<<<<<<< Tabnine <<<<<<<
+      <Button onClick={addUser} appName="web" className="m-4">Button</Button>//-
+      <Button onClick={addUser} appName="web" className="m-4">//+
+        Button//+
+      </Button>//+
+>>>>>>> Tabnine >>>>>>>// {"conversationId":"d5fde76b-9565-4274-a657-b5b2e5a74d3a","source":"instruct"}
     </div>
   )
 }

@@ -145,6 +145,16 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
               Submit
             </button>
           </motion.div>
+
+          <div className="flex items-center justify-center mt-6">
+            <span className="border-b w-6/12 lg:w-6/12"></span>
+            <p className="text-sm text-gray-600 px-2">OR</p>
+            <span className="border-b w-6/12 lg:w-6/12"></span>
+          </div>
+
+          <div className="flex items-center justify-center">
+            <p>Already Memebar? <a href="#" className="text-blue-500">Sign In</a></p>
+          </div>
         </div>
         </Form>
         )}

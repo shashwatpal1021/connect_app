@@ -1,12 +1,13 @@
 import { Signup } from '@repo/ui/signup'
 import React from 'react'
 import 'react-toastify/dist/ReactToastify.css';
+import { Signin } from '@repo/ui/signin';
 
 
 const page = () => {
   return (
     
-      <Signup>Sign Up</Signup>
+      <Signin>Sign In</Signin>
    
   )
 }
