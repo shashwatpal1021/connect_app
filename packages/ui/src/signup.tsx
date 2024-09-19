@@ -5,36 +5,31 @@ import { signUpSchema } from "./schema/signup";
 import Custominput from "./custominput";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import FormikInput from "./FormikInput";
+import { Formik, Form, FormikHelpers } from "formik";
+import * as Yup from "yup";
 
 export const Signup = ({ children }: { children: React.ReactNode }) => {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
-  const [fomrData, setformData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const loginSchema = Yup.object().shape({
+    name: Yup.string().required("Required"),
+    email: Yup.string().required("Required"),
+    password: Yup.string().required("Required"),
+    confirmPassword:Yup.string().required("Required"),
   });
 
-  const setData = (e: any) => {
-    setformData({ ...fomrData, [e.target.name]: e.target.value });
-  };
-
-  const SubmitData = async () => {
-    const result = signUpSchema.safeParse(fomrData);
-    console.log(result.success);
-    if (result.success) {
-      console.log("Form submitted successfully!", result.data);
+  const SubmitData = async (
+    values:any,
+    { setSubmitting, resetForm, setFieldValue, setFieldError }: FormikHelpers<any>
+  ) => {
       try {
         const res = await axios.post(
           `http://localhost:4000/create`,
-          result.data
+          values
         );
         console.log("res", res);
         if (res.status === 201) {
-          debugger;
           toast.success("Account created successfully!");
+          resetForm({ values: "" });
         } else {
           toast.error(res.data.message);
         }
@@ -42,9 +37,6 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
         console.log(error);
         toast.error(error.response.data.message);
       }
-    } else {
-      console.log("Validation errors:", result.error.format());
-    }
   };
 
   return (
@@ -59,55 +51,75 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
         <h4 className="text-lg font-semibold mb-6 text-gray-800">
           Hey there! Welcome
         </h4>
-
+        <Formik
+        initialValues={{
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          
+        }}
+        validationSchema={loginSchema}
+        onSubmit={SubmitData}
+      >
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          values,
+          setFieldError,
+          isValid,
+          isSubmitting,
+          setFieldValue,
+          setTouched,
+          setErrors
+        }) => (
+          console.log('Formik values:', values),
+          console.log('Formik errors:', errors),
+          <Form>
         <div className="space-y-4">
           <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
-            <Custominput
+            <FormikInput
               type="text"
               name="name"
-              value={fomrData.name}
-              onChnage={(e?: any) => {
-                setData(e);
-              }}
+              value={values.name}
               label="Name"
-              Placeholder="Name"
+              placeholder="Name"
+              required
             />
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
-            <Custominput
+            <FormikInput
               type="text"
               name="email"
-              value={fomrData.email}
-              onChnage={(e?: any) => {
-                setData(e);
-              }}
+              value={values.email}
               label="Email"
-              Placeholder="Email"
+              placeholder="Email"
+              required
             />
           </motion.div>
 
           <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
-            <Custominput
-              type="text"
+            <FormikInput
+              type="password"
               name="password"
-              value={fomrData.password}
-              onChnage={(e?: any) => {
-                setData(e);
-              }}
+              value={values.password}
               label="Password"
-              Placeholder="Password"
+              placeholder="Password"
+              required
+
             />
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
-            <Custominput
-              type="text"
+            <FormikInput
+              type="password"
               name="confirmPassword"
-              value={fomrData.confirmPassword}
-              onChnage={(e?: any) => {
-                setData(e);
-              }}
+              value={values.confirmPassword}
               label="Confirm Password"
-              Placeholder="Confirm Password"
+              placeholder="Confirm Password"
+              required
+
             />
           </motion.div>
           <motion.div
@@ -116,13 +128,15 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
           >
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              onClick={SubmitData}
-            >
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"            >
               Submit
             </button>
           </motion.div>
         </div>
+        </Form>
+        )}
+        </Formik>
+        
       </motion.div>
     </div>
   );
