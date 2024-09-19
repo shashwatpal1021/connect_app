@@ -9,12 +9,21 @@ import FormikInput from "./FormikInput";
 import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 
+const passwordValidationSchema = Yup.string()
+  .matches(
+    /[!@#$%^&*(),.?":{}|<>]/,
+    "Password must have a special character (@&_^)"
+  )
+  .matches(/\d/, "Password must have at least 1 digit character (0-9)")
+  .matches(/[A-Z]/, "Password must have at least 1 uppercase character (A-Z)")
+  .matches(/[a-z]/, "Password must have at least 1 lowercase character (a-z)")
+  .required("Password is required");
 export const Signup = ({ children }: { children: React.ReactNode }) => {
   const loginSchema = Yup.object().shape({
     name: Yup.string().required("Required"),
-    email: Yup.string().required("Required"),
-    password: Yup.string().required("Required"),
-    confirmPassword:Yup.string().required("Required"),
+    email: Yup.string().required("Required").email("Invalid email"),
+    password: passwordValidationSchema,
+    confirmPassword:passwordValidationSchema,
   });
 
   const SubmitData = async (
@@ -22,6 +31,10 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
     { setSubmitting, resetForm, setFieldValue, setFieldError }: FormikHelpers<any>
   ) => {
       try {
+        if(values.password !== values.confirmPassword) {
+          setFieldError('confirmPassword', 'Confirm Password do not match with Password');
+          return;
+        }
         const res = await axios.post(
           `http://localhost:4000/create`,
           values
@@ -132,6 +145,16 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
               Submit
             </button>
           </motion.div>
+
+          <div className="flex items-center justify-center mt-6">
+            <span className="border-b w-6/12 lg:w-6/12"></span>
+            <p className="text-sm text-gray-600 px-2">OR</p>
+            <span className="border-b w-6/12 lg:w-6/12"></span>
+          </div>
+
+          <div className="flex items-center justify-center">
+            <p>Already Memebar? <a href="#" className="text-blue-500">Sign In</a></p>
+          </div>
         </div>
         </Form>
         )}
