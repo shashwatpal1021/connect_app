@@ -45,6 +45,7 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
         if (res.status === 201) {
           toast.success("Account created successfully!");
           resetForm({ values: "" });
+          router.push('/Admin/signin')
         } else {
           toast.error(res.data.message);
         }

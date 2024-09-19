@@ -31,17 +31,11 @@ export const Signin = ({ children }: { children: React.ReactNode }) => {
     }: FormikHelpers<any>
   ) => {
     try {
-      if (values.password !== values.confirmPassword) {
-        setFieldError(
-          "confirmPassword",
-          "Confirm Password do not match with Password"
-        );
-        return;
-      }
-      const res = await axios.post(`http://localhost:4000/create`, values);
+
+      const res = await axios.post(`http://localhost:4000/sign-in`, values);
       console.log("res", res);
-      if (res.status === 201) {
-        toast.success("Account created successfully!");
+      if (res.status === 200) {
+        toast.success("User logged in successfully!");
         resetForm({ values: "" });
       } else {
         toast.error(res.data.message);
