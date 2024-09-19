@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import FormikInput from "./FormikInput";
 import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
-
+import { useRouter } from 'next/navigation'
 const passwordValidationSchema = Yup.string()
   .matches(
     /[!@#$%^&*(),.?":{}|<>]/,
@@ -20,7 +20,7 @@ export const Signin = ({ children }: { children: React.ReactNode }) => {
     email: Yup.string().required("Required").email("Invalid email"),
     password: passwordValidationSchema,
   });
-
+  const router = useRouter();
   const SubmitData = async (
     values: any,
     {
@@ -138,7 +138,7 @@ export const Signin = ({ children }: { children: React.ReactNode }) => {
                   <div className="flex items-center justify-center">
                     <p>
                       New User?{" "}
-                      <a href="#" className="text-blue-500">
+                      <a href="#" className="text-blue-500" onClick={() => router.push('/Admin/signup')}>
                         Sign Up
                       </a>
                     </p>
