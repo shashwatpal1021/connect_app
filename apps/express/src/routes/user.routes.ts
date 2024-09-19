@@ -15,15 +15,29 @@ userRouter.get('/', async (req: Request, res: Response) => {
 
 userRouter.post('/create', async (req: any, res: any) => {
   console.log("res", req.body)
-  const result = signUpSchema.safeParse(req.body)
-  const resp = await prisma.user.create({
-    data: result.data
-  })
-  console.log("resp", resp)
-  res.status(201).json({
-    message: 'User created successfully',
-    data: resp
-  })
+  try {
+    const result = signUpSchema.safeParse(req.body)
+    const user = await prisma.user.findUnique({
+      where: {
+        email: result.data.email
+      }
+    })
+    if(user) {
+      return res.status(400).json({
+        message: 'User already exists'
+      })
+    }
+    const resp = await prisma.user.create({
+      data: result.data
+    })
+    console.log("resp", resp)
+    res.status(201).json({
+      message: 'User created successfully',
+      data: resp
+    })
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' })
+  }
 })
 
 export default userRouter;

@@ -36,6 +36,7 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
           debugger;
           toast.success("Account created successfully!");
         } else {
+          toast.error(res.data.message);
         }
       } catch (error: any) {
         console.log(error);
