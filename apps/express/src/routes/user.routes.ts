@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 const userRouter = Express.Router();
 
 userRouter.get('/', async (req: Request, res: Response) => {
-  res.send("hello")
+  res.status(200).send("hello")
 })
 
 userRouter.post('/create', async (req: any, res: any) => {
