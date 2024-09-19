@@ -9,7 +9,8 @@
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
     "./schema/signup": "./src/schema/signup.tsx",
-    "./custominput":"./src/custominput.tsx"
+    "./custominput":"./src/custominput.tsx",
+    "./toast":"./src/toast.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
