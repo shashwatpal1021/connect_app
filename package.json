@@ -23,5 +23,12 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "framer-motion": "^11.5.4",
+    "goober": "^2.1.14",
+    "react-hot-toast": "^2.4.1",
+    "react-toastify": "^10.0.5",
+    "rsuite": "^5.70.1"
+  }
 }

@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import { signUpSchema } from "./schema/signup";
+import Custominput from "./custominput";
+import { motion } from "framer-motion";
+import { toast } from "react-hot-toast";
 
 export const Signup = ({ children }: { children: React.ReactNode }) => {
   // const [email, setEmail] = useState('');
@@ -9,63 +12,117 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
   // const [confirmPassword, setConfirmPassword] = useState('');
   const [fomrData, setformData] = useState({
     name: "",
-    email: '',
-    password: '',
-    confirmPassword: '',
-  })
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const setData = (e: any) => {
-    setformData({ ...fomrData, [e.target.name]: e.target.value })
-  }
+    setformData({ ...fomrData, [e.target.name]: e.target.value });
+  };
 
   const SubmitData = async () => {
     const result = signUpSchema.safeParse(fomrData);
+    console.log(result.success);
     if (result.success) {
       console.log("Form submitted successfully!", result.data);
-      const res = await axios.post(`http://localhost:4000/create`, result.data)
-      console.log("res", res)
+      try {
+        const res = await axios.post(
+          `http://localhost:4000/create`,
+          result.data
+        );
+        console.log("res", res);
+        if (res.status === 201) {
+          debugger;
+          toast.success("Account created successfully!");
+        } else {
+        }
+      } catch (error: any) {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     } else {
       console.log("Validation errors:", result.error.format());
     }
-  }
-  return (
+  };
 
-    <div className="flex flex-col justify-center ">
-      <div className="flex flex-col p-5 justify-center border-solid border-2  rounded-lg shadow-2xl">
-        <div className="text-2xl mb-1 font-bold">{children}</div>
-        <h1>Hey there! Welcome branch add</h1>
-        <hr />
-        <label htmlFor="name" className="p-1">Name: <input type="text"
-          className="p-1 w-full border-2 border-black rounded-lg"
-          value={fomrData.name}
-          name="name"
-          id="name"
-          placeholder="Name"
-          onChange={setData} /></label>
-        <label htmlFor="email" className="p-1">Email: <input type="text"
-          className="p-1 w-full border-2 border-black rounded-lg"
-          value={fomrData.email}
-          name="email"
-          id="email"
-          placeholder="email"
-          onChange={setData} /></label>
-        <label htmlFor="password" className="p-1">Paswword: <input type="text"
-          className="p-1 w-full border-2 border-black rounded-lg"
-          value={fomrData.password}
-          name="password"
-          id="password"
-          placeholder="password"
-          onChange={setData} /></label>
-        <label htmlFor="confirmpassword" className="p-1">Confirm Password: <input type="text"
-          className="p-1 w-full border-2 border-black rounded-lg"
-          value={fomrData.confirmPassword}
-          name="confirmPassword"
-          id="confirmPassword"
-          placeholder="confirmPassword"
-          onChange={setData} /></label>
-        <label className="pt-3 pr-1 pl-1"><button type="submit" className="p-1 w-full border-2 border-black rounded-lg" onClick={SubmitData}>Submit</button>
-        </label>
-      </div>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-200 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full"
+      >
+        <h2 className="text-3xl font-bold mb-2 text-gray-800">{children}</h2>
+        <h4 className="text-lg font-semibold mb-6 text-gray-800">
+          Hey there! Welcome
+        </h4>
+
+        <div className="space-y-4">
+          <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
+            <Custominput
+              type="text"
+              name="name"
+              value={fomrData.name}
+              onChnage={(e?: any) => {
+                setData(e);
+              }}
+              label="Name"
+              Placeholder="Name"
+            />
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
+            <Custominput
+              type="text"
+              name="email"
+              value={fomrData.email}
+              onChnage={(e?: any) => {
+                setData(e);
+              }}
+              label="Email"
+              Placeholder="Email"
+            />
+          </motion.div>
+
+          <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
+            <Custominput
+              type="text"
+              name="password"
+              value={fomrData.password}
+              onChnage={(e?: any) => {
+                setData(e);
+              }}
+              label="Password"
+              Placeholder="Password"
+            />
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
+            <Custominput
+              type="text"
+              name="confirmPassword"
+              value={fomrData.confirmPassword}
+              onChnage={(e?: any) => {
+                setData(e);
+              }}
+              label="Confirm Password"
+              Placeholder="Confirm Password"
+            />
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center justify-center mt-6"
+          >
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              onClick={SubmitData}
+            >
+              Submit
+            </button>
+          </motion.div>
+        </div>
+      </motion.div>
     </div>
   );
 };
