@@ -33,9 +33,7 @@ export const Signup = ({ children }: { children: React.ReactNode }) => {
         );
         console.log("res", res);
         if (res.status === 201) {
-          debugger;
           toast.success("Account created successfully!");
-        } else {
         }
       } catch (error: any) {
         console.log(error);
