@@ -3,10 +3,10 @@
 import { ReactNode } from "react";
 
 interface ButtonProps {
-  children: ReactNode;
+  children: '';
   className?: string;
   appName: string;
-  onClick: () => void;
+  onClick: () => {};
 }
 
 export const Button = ({ children, className, appName, onClick }: ButtonProps) => {
