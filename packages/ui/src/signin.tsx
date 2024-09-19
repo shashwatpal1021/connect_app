@@ -22,29 +22,34 @@ export const Signin = ({ children }: { children: React.ReactNode }) => {
   });
 
   const SubmitData = async (
-    values:any,
-    { setSubmitting, resetForm, setFieldValue, setFieldError }: FormikHelpers<any>
+    values: any,
+    {
+      setSubmitting,
+      resetForm,
+      setFieldValue,
+      setFieldError,
+    }: FormikHelpers<any>
   ) => {
-      try {
-        if(values.password !== values.confirmPassword) {
-          setFieldError('confirmPassword', 'Confirm Password do not match with Password');
-          return;
-        }
-        const res = await axios.post(
-          `http://localhost:4000/create`,
-          values
+    try {
+      if (values.password !== values.confirmPassword) {
+        setFieldError(
+          "confirmPassword",
+          "Confirm Password do not match with Password"
         );
-        console.log("res", res);
-        if (res.status === 201) {
-          toast.success("Account created successfully!");
-          resetForm({ values: "" });
-        } else {
-          toast.error(res.data.message);
-        }
-      } catch (error: any) {
-        console.log(error);
-        toast.error(error.response.data.message);
+        return;
       }
+      const res = await axios.post(`http://localhost:4000/create`, values);
+      console.log("res", res);
+      if (res.status === 201) {
+        toast.success("Account created successfully!");
+        resetForm({ values: "" });
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -60,79 +65,89 @@ export const Signin = ({ children }: { children: React.ReactNode }) => {
           Hey there! Welcome
         </h4>
         <Formik
-        initialValues={{
-          email: "",
-          password: "",
-          
-        }}
-        validationSchema={loginSchema}
-        onSubmit={SubmitData}
-      >
-        {({
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          values,
-          setFieldError,
-          isValid,
-          isSubmitting,
-          setFieldValue,
-          setTouched,
-          setErrors
-        }) => (
-          console.log('Formik values:', values),
-          console.log('Formik errors:', errors),
-          <Form>
-        <div className="space-y-4">
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={loginSchema}
+          onSubmit={SubmitData}
+        >
+          {({
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            values,
+            setFieldError,
+            isValid,
+            isSubmitting,
+            setFieldValue,
+            setTouched,
+            setErrors,
+          }) => (
+            console.log("Formik values:", values),
+            console.log("Formik errors:", errors),
+            (
+              <Form>
+                <div className="space-y-4">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="col-span-1"
+                  >
+                    <FormikInput
+                      type="text"
+                      name="email"
+                      value={values.email}
+                      label="Email"
+                      placeholder="Email"
+                      required
+                    />
+                  </motion.div>
 
-          <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
-            <FormikInput
-              type="text"
-              name="email"
-              value={values.email}
-              label="Email"
-              placeholder="Email"
-              required
-            />
-          </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="col-span-1"
+                  >
+                    <FormikInput
+                      type="password"
+                      name="password"
+                      value={values.password}
+                      label="Password"
+                      placeholder="Password"
+                      required
+                    />
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center justify-center mt-6"
+                  >
+                    <button
+                      type="submit"
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    >
+                      Log In
+                    </button>
+                  </motion.div>
 
-          <motion.div whileHover={{ scale: 1.05 }} className="col-span-1">
-            <FormikInput
-              type="password"
-              name="password"
-              value={values.password}
-              label="Password"
-              placeholder="Password"
-              required
+                  <div className="flex items-center justify-center mt-6">
+                    <span className="border-b w-6/12 lg:w-6/12"></span>
+                    <p className="text-sm text-gray-600 px-2">OR</p>
+                    <span className="border-b w-6/12 lg:w-6/12"></span>
+                  </div>
 
-            />
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center justify-center mt-6"
-          >
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"            >
-              Log In
-            </button>
-          </motion.div>
-
-          <div className="flex items-center justify-center mt-6">
-            <span className="border-b w-6/12 lg:w-6/12"></span>
-            <p className="text-sm text-gray-600 px-2">OR</p>
-            <span className="border-b w-6/12 lg:w-6/12"></span>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <p>New User? <a href="#" className="text-blue-500">Sign Up</a></p>
-          </div>
-        </div>
-        </Form>
-        )}
+                  <div className="flex items-center justify-center">
+                    <p>
+                      New User?{" "}
+                      <a href="#" className="text-blue-500">
+                        Sign Up
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </Form>
+            )
+          )}
         </Formik>
-        
       </motion.div>
     </div>
   );
