@@ -14,10 +14,7 @@ const addUser = async() => {
 const Home = () => {
   return (
     <div>
-      <div className="m-4 text-2xl">Welcome to the connect_app
-        
-      </div>
-     
+      <div className="m-4 text-2xl">Welcome to connect_app</div>
     </div>
   )
 }
